@@ -43,3 +43,27 @@ class UserPostsErrorState extends MyAppState {
   final String postErrorMsg;
   UserPostsErrorState({required this.postErrorMsg});
 }
+
+class UserCommentsLoadingState extends MyAppState {}
+
+class UserCommentsLoadedState extends MyAppState {
+  final List<CommentsModel> list;
+  UserCommentsLoadedState(this.list);
+}
+
+class UserCommentsErrorState extends MyAppState {
+  final String msg;
+  UserCommentsErrorState(this.msg);
+}
+
+class UserPhotosLoadingState extends MyAppState {}
+
+class UserPhotosLoadedState extends MyAppState {
+  final List<PhotosModel> list;
+  UserPhotosLoadedState(this.list);
+}
+
+class UserPhotosErrorState extends MyAppState {
+  final String msg;
+  UserPhotosErrorState(this.msg);
+}

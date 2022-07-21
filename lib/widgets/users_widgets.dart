@@ -40,10 +40,21 @@ Widget UsersLoadedUI(
 }
 
 Widget UsersErrorUI(String message) {
-  return Container(
-    color: Colors.red,
-    child: Center(
-      child: Text(message),
+  return SingleChildScrollView(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Container(
+            height: double.maxFinite,
+            width: double.maxFinite,
+            color: Colors.red,
+            child: Center(
+              child: Text(message),
+            ),
+          ),
+        )
+      ],
     ),
   );
 }

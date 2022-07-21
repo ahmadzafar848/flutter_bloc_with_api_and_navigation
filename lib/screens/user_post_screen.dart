@@ -31,9 +31,16 @@ class UserPostScreen extends StatelessWidget {
           if (state is UsersPostLoadingState) {
             return postsLoadingUI();
           } else if (state is UsersPostsLoadedState) {
-            return postsLoadedUI(state.list, context);
+            return RefreshIndicator(
+                onRefresh: () async{
+                  bloc.add(FetchUsersPosts(model.id!));
+                },
+                child: postsLoadedUI(state.list, context));
           } else if (state is UserPostsErrorState) {
-            return postErrorUI(state.postErrorMsg);
+            return RefreshIndicator(onRefresh: () async{
+              bloc.add(FetchUsersPosts(model.id!));
+            },
+            child: postErrorUI(state.postErrorMsg));
           } else {
             return const Center(child: Text('Post Builder Error'));
           }

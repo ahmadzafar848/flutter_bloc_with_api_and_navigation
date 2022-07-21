@@ -17,11 +17,17 @@ class UsersScreen extends StatelessWidget {
           if (state is UsersLoadingState) {
             return UsersLoadingUI();
           } else if (state is UsersLoadedState) {
-            return UsersLoadedUI(
-              state.list,
+            return RefreshIndicator(onRefresh: ()async{
+              myAppBloc.add(FetchUsersEvent());
+            },
+              child: UsersLoadedUI(
+                state.list,
+              ),
             );
           } else if (state is UserErrorState) {
-            return UsersErrorUI(state.errorMessage);
+            return RefreshIndicator(onRefresh: ()async{
+              myAppBloc.add(FetchUsersEvent());
+            },child: UsersErrorUI(state.errorMessage));
           } else {
             return const Center(
               child: Text('State Error'),
