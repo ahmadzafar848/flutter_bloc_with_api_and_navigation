@@ -1,5 +1,6 @@
 import 'package:bloc_api_implementation/app_bloc/my_app_bloc.dart';
 import 'package:bloc_api_implementation/models/UsersModel.dart';
+import 'package:bloc_api_implementation/screens/user_detail_screen.dart';
 import 'package:bloc_api_implementation/widgets/posts_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,6 @@ class UserPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Post Screen');
     UsersModel model = ModalRoute.of(context)!.settings.arguments as UsersModel;
     PostAppBloc bloc = Provider.of<PostAppBloc>(context, listen: false);
     bloc.add(FetchUsersPosts(model.id!));
@@ -21,9 +21,15 @@ class UserPostScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Posts'),
           actions: [
-            CircleAvatar(
-              child: Text(
-                model.id.toString(),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, UserDetailScreen.userDetailScreen,
+                    arguments: model);
+              },
+              child: CircleAvatar(
+                child: Text(
+                  model.id.toString(),
+                ),
               ),
             ),
           ],

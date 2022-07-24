@@ -11,7 +11,6 @@ class PhotosScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Photos Screen');
     PostsModel model = ModalRoute.of(context)!.settings.arguments as PostsModel;
     PhotosAppBloc bloc = context.read<PhotosAppBloc>();
     bloc.add(FetchUsersPhotos(model.id!));

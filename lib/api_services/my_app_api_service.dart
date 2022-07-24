@@ -18,6 +18,13 @@ class JsonApiServices {
     return data.map((e) => UsersModel.fromJson(e)).toList();
   }
 
+  Future<List<UsersModel>> fetchUsersDetail(int id) async {
+    Response response = await get(Uri.parse(baseURL + usersApiURL));
+
+    List data = jsonDecode(response.body);
+    return data.map((e) => UsersModel.fromJson(e)).toList();
+  }
+
   Future<List<PostsModel>> fetchPosts(int id) async {
     Response response =
         await get(Uri.parse('$baseURL$usersApiURL$id/$postsApiURL'));

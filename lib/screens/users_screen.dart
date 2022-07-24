@@ -6,12 +6,11 @@ import 'package:provider/provider.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({Key? key}) : super(key: key);
-  static const String usersHomeScreen = '/67';
+  static const String usersHomeScreen = '/';
 
   @override
   Widget build(BuildContext context) {
     UserAppBloc myAppBloc = context.read<UserAppBloc>();
-    myAppBloc.add(FetchUsersEvent());
     myAppBloc.add(FetchUsersEvent());
     return Scaffold(
       appBar: AppBar(

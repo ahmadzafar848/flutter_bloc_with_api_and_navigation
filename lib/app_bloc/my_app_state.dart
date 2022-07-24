@@ -3,13 +3,6 @@ part of 'my_app_bloc.dart';
 @immutable
 abstract class MyAppState {}
 
-class UsersInitialState extends MyAppState {
-  final String msg;
-  UsersInitialState({required this.msg});
-}
-
-class UserLoadingState extends MyAppState {}
-
 class UsersLoadingState extends MyAppState {}
 
 class UsersLoadedState extends MyAppState {
@@ -20,6 +13,18 @@ class UsersLoadedState extends MyAppState {
 class UserErrorState extends MyAppState {
   final String errorMessage;
   UserErrorState({required this.errorMessage});
+}
+
+class UsersDetailLoadingState extends MyAppState {}
+
+class UsersDetailLoadedState extends MyAppState {
+  final List<UsersModel> list;
+  UsersDetailLoadedState({required this.list});
+}
+
+class UserDetailErrorState extends MyAppState {
+  final String errorMessage;
+  UserDetailErrorState({required this.errorMessage});
 }
 
 class UserLoadedState extends MyAppState {

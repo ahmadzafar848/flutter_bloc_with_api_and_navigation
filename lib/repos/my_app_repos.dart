@@ -11,6 +11,10 @@ class JsonRepository {
     return await userApiService.fetchUsers();
   }
 
+  Future<List<UsersModel>> fetchUsersDetailData(int id) async {
+    return await userApiService.fetchUsersDetail(id);
+  }
+
   Future<List<PostsModel>> fetchUsersPosts(int id) async {
     return await userApiService.fetchPosts(id);
   }

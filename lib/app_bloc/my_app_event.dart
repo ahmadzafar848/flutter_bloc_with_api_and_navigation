@@ -3,11 +3,12 @@ part of 'my_app_bloc.dart';
 @immutable
 abstract class MyAppEvent {}
 
-class FetchUserEvent extends MyAppEvent {}
-
-class FetchUserPost extends MyAppEvent {}
-
 class FetchUsersEvent extends MyAppEvent {}
+
+class FetchUsersDetailEvent extends MyAppEvent {
+  int id;
+  FetchUsersDetailEvent(this.id);
+}
 
 class FetchUsersPosts extends MyAppEvent {
   int id;

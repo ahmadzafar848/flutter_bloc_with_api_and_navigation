@@ -1,7 +1,8 @@
 import 'package:bloc_api_implementation/screens/comments_screen.dart';
-import 'package:bloc_api_implementation/screens/home_page_user.dart';
 import 'package:bloc_api_implementation/screens/photos_screen.dart';
+import 'package:bloc_api_implementation/screens/user_detail_screen.dart';
 import 'package:bloc_api_implementation/screens/user_post_screen.dart';
+import 'package:bloc_api_implementation/screens/users_screen.dart';
 import 'package:flutter/material.dart';
 
 class JsonAppNavigation {
@@ -11,11 +12,11 @@ class JsonAppNavigation {
       case UsersScreen.usersHomeScreen:
         {
           return MaterialPageRoute(
-              builder: (context) {
-                return UsersScreen();
-              },
-              settings: settings,
-             );
+            builder: (context) {
+              return UsersScreen();
+            },
+            settings: settings,
+          );
         }
       case UserPostScreen.usersPostScreen:
         {
@@ -38,6 +39,14 @@ class JsonAppNavigation {
           return MaterialPageRoute(
               builder: (context) {
                 return CommentsScreen();
+              },
+              settings: settings);
+        }
+      case UserDetailScreen.userDetailScreen:
+        {
+          return MaterialPageRoute(
+              builder: (context) {
+                return UserDetailScreen();
               },
               settings: settings);
         }

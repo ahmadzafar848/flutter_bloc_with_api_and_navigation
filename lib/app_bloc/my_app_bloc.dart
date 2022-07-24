@@ -73,3 +73,17 @@ class PhotosAppBloc extends Bloc<MyAppEvent, MyAppState> {
     });
   }
 }
+
+class UserDetailAppBloc extends Bloc<MyAppEvent, MyAppState> {
+  UserDetailAppBloc() : super(UsersDetailLoadingState()) {
+    on<FetchUsersDetailEvent>((event, emit) async {
+      try {
+        int id = event.id;
+        List<UsersModel> list = await userRepository.fetchUsersDetailData(id);
+        emit.call(UsersDetailLoadedState(list: list));
+      } catch (e) {
+        emit.call(UserDetailErrorState(errorMessage: e.toString()));
+      }
+    });
+  }
+}
