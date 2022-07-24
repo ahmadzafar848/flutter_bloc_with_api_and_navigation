@@ -14,7 +14,8 @@ class JsonAppNavigation {
               builder: (context) {
                 return UsersScreen();
               },
-              settings: settings);
+              settings: settings,
+             );
         }
       case UserPostScreen.usersPostScreen:
         {

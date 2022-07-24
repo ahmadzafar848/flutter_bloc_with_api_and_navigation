@@ -12,9 +12,11 @@ class UserPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Post Screen');
     UsersModel model = ModalRoute.of(context)!.settings.arguments as UsersModel;
-    MyAppBloc bloc = Provider.of<MyAppBloc>(context, listen: false);
+    PostAppBloc bloc = Provider.of<PostAppBloc>(context, listen: false);
     bloc.add(FetchUsersPosts(model.id!));
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Posts'),
@@ -26,21 +28,22 @@ class UserPostScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: BlocBuilder<MyAppBloc, MyAppState>(
+        body: BlocBuilder<PostAppBloc, MyAppState>(
             builder: (BuildContext context, state) {
           if (state is UsersPostLoadingState) {
             return postsLoadingUI();
           } else if (state is UsersPostsLoadedState) {
             return RefreshIndicator(
-                onRefresh: () async{
+                onRefresh: () async {
                   bloc.add(FetchUsersPosts(model.id!));
                 },
-                child: postsLoadedUI(state.list, context));
+                child: postsLoadedUI(state.list, context, model.id!));
           } else if (state is UserPostsErrorState) {
-            return RefreshIndicator(onRefresh: () async{
-              bloc.add(FetchUsersPosts(model.id!));
-            },
-            child: postErrorUI(state.postErrorMsg));
+            return RefreshIndicator(
+                onRefresh: () async {
+                  bloc.add(FetchUsersPosts(model.id!));
+                },
+                child: postErrorUI(state.postErrorMsg));
           } else {
             return const Center(child: Text('Post Builder Error'));
           }

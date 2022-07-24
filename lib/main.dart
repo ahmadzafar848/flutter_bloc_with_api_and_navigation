@@ -15,8 +15,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<MyAppBloc>(
-          create: (context) => MyAppBloc(),
+        BlocProvider<UserAppBloc>(
+          create: (context) => UserAppBloc(),
+        ),
+        BlocProvider<PostAppBloc>(
+          create: (context) => PostAppBloc(),
+        ),
+        BlocProvider<CommentsAppBloc>(
+          create: (context) => CommentsAppBloc(),
+        ),
+        BlocProvider<PhotosAppBloc>(
+          create: (context) => PhotosAppBloc(),
         ),
       ],
       child: MaterialApp(

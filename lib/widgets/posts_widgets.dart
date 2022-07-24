@@ -12,7 +12,7 @@ Widget postsLoadingUI() {
   );
 }
 
-Widget postsLoadedUI(List<PostsModel> list, BuildContext context) {
+Widget postsLoadedUI(List<PostsModel> list, BuildContext context, int id) {
   double height = MediaQuery.of(context).size.height;
   return ListView.builder(
     itemCount: list.length,
@@ -57,7 +57,7 @@ ${list[item_index].body}''',
                     children: List.generate(
                       2,
                       (index) => ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (index == 0) {
                             Navigator.pushNamed(
                                 context, CommentsScreen.commentsScreen,

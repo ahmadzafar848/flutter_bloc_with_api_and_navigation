@@ -11,29 +11,35 @@ class PhotosScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Photos Screen');
     PostsModel model = ModalRoute.of(context)!.settings.arguments as PostsModel;
-    MyAppBloc bloc = context.read<MyAppBloc>();
+    PhotosAppBloc bloc = context.read<PhotosAppBloc>();
     bloc.add(FetchUsersPhotos(model.id!));
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Photos'),
       ),
-      body: BlocBuilder<MyAppBloc, MyAppState>(
+      body: BlocBuilder<PhotosAppBloc, MyAppState>(
         builder: (context, state) {
           if (state is UserPhotosLoadingState) {
             return PhotosLoadingUI();
           } else if (state is UserPhotosLoadedState) {
-            return RefreshIndicator(onRefresh: () async{
-              bloc.add(FetchUsersPhotos(model.id!));
-            },
-            child: PhotosLoadedUI(context, state.list));
+            return RefreshIndicator(
+                onRefresh: () async {
+                  bloc.add(FetchUsersPhotos(model.id!));
+                },
+                child: PhotosLoadedUI(context, state.list));
           } else if (state is UserPhotosErrorState) {
-            return RefreshIndicator(onRefresh: ()async{
-              bloc.add(FetchUsersPhotos(model.id!));
-            },child: RefreshIndicator(onRefresh: ()async{
-              bloc.add(FetchUsersPhotos(model.id!));
-            },child: PhotosErrorUI(state.msg)));
+            return RefreshIndicator(
+                onRefresh: () async {
+                  bloc.add(FetchUsersPhotos(model.id!));
+                },
+                child: RefreshIndicator(
+                    onRefresh: () async {
+                      bloc.add(FetchUsersPhotos(model.id!));
+                    },
+                    child: PhotosErrorUI(state.msg)));
           } else {
             return Text('Photo builder Error');
           }

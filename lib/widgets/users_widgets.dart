@@ -19,8 +19,10 @@ Widget UsersLoadedUI(
         padding: EdgeInsets.symmetric(vertical: 8),
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, UserPostScreen.usersPostScreen,
+            Navigator.of(context).pushNamed(UserPostScreen.usersPostScreen,
                 arguments: list[index]);
+            // Navigator.pushNamed(context, UserPostScreen.usersPostScreen,
+            //     arguments: list[index]);
           },
           child: Card(
             elevation: 10,

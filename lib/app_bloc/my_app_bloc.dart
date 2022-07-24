@@ -10,9 +10,10 @@ import '../models/UsersModel.dart';
 part 'my_app_event.dart';
 part 'my_app_state.dart';
 
-class MyAppBloc extends Bloc<MyAppEvent, MyAppState> {
-  final userRepository = JsonRepository();
-  MyAppBloc() : super(UsersLoadingState()) {
+final userRepository = JsonRepository();
+
+class UserAppBloc extends Bloc<MyAppEvent, MyAppState> {
+  UserAppBloc() : super(UsersLoadingState()) {
     on<FetchUsersEvent>((event, emit) async {
       try {
         List<UsersModel> list = await userRepository.fetchUsersData();
@@ -21,7 +22,11 @@ class MyAppBloc extends Bloc<MyAppEvent, MyAppState> {
         emit.call(UserErrorState(errorMessage: 'Catch Block$e'));
       }
     });
+  }
+}
 
+class PostAppBloc extends Bloc<MyAppEvent, MyAppState> {
+  PostAppBloc() : super(UsersPostLoadingState()) {
     on<FetchUsersPosts>((event, emit) async {
       try {
         int id = event.id;
@@ -34,25 +39,36 @@ class MyAppBloc extends Bloc<MyAppEvent, MyAppState> {
         ));
       }
     });
+  }
+}
+
+class CommentsAppBloc extends Bloc<MyAppEvent, MyAppState> {
+  CommentsAppBloc() : super(UserCommentsLoadingState()) {
     on<FetchUsersComments>((event, emit) async {
       try {
         int id = event.id;
-        emit.call(UserCommentsLoadingState());
         List<CommentsModel> list = await userRepository.fetchUsersComments(id);
-        print('sb gandu');
         emit.call(UserCommentsLoadedState(list));
       } catch (e) {
-        emit.call(UserCommentsErrorState('Error State'));
+        emit.call(UserPostsErrorState(
+          postErrorMsg: e.toString(),
+        ));
       }
     });
+  }
+}
+
+class PhotosAppBloc extends Bloc<MyAppEvent, MyAppState> {
+  PhotosAppBloc() : super(UserPhotosLoadingState()) {
     on<FetchUsersPhotos>((event, emit) async {
-      int id = event.id;
-      emit.call(UserPhotosLoadingState());
       try {
+        int id = event.id;
         List<PhotosModel> list = await userRepository.fetchUserPhotos(id);
         emit.call(UserPhotosLoadedState(list));
       } catch (e) {
-        emit.call(UserPhotosErrorState('Photo Error State'));
+        emit.call(UserPostsErrorState(
+          postErrorMsg: e.toString(),
+        ));
       }
     });
   }

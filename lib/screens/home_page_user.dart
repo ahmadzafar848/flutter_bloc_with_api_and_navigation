@@ -2,35 +2,32 @@ import 'package:bloc_api_implementation/app_bloc/my_app_bloc.dart';
 import 'package:bloc_api_implementation/widgets/users_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({Key? key}) : super(key: key);
-  static const String usersHomeScreen = '/';
+  static const String usersHomeScreen = '/67';
 
   @override
   Widget build(BuildContext context) {
-    MyAppBloc myAppBloc = context.read<MyAppBloc>();
+    UserAppBloc myAppBloc = context.read<UserAppBloc>();
+    myAppBloc.add(FetchUsersEvent());
     myAppBloc.add(FetchUsersEvent());
     return Scaffold(
-      body: BlocBuilder<MyAppBloc, MyAppState>(
-        builder: (BuildContext context, state) {
+      appBar: AppBar(
+        title: Text('Users'),
+      ),
+      body: BlocBuilder<UserAppBloc, MyAppState>(
+        builder: (context, state) {
           if (state is UsersLoadingState) {
             return UsersLoadingUI();
           } else if (state is UsersLoadedState) {
-            return RefreshIndicator(onRefresh: ()async{
-              myAppBloc.add(FetchUsersEvent());
-            },
-              child: UsersLoadedUI(
-                state.list,
-              ),
-            );
+            return UsersLoadedUI(state.list);
           } else if (state is UserErrorState) {
-            return RefreshIndicator(onRefresh: ()async{
-              myAppBloc.add(FetchUsersEvent());
-            },child: UsersErrorUI(state.errorMessage));
+            return UsersErrorUI(state.errorMessage);
           } else {
-            return const Center(
-              child: Text('State Error'),
+            return Center(
+              child: Text('User Builder Error'),
             );
           }
         },

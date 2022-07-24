@@ -13,24 +13,29 @@ class CommentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PostsModel model = ModalRoute.of(context)!.settings.arguments as PostsModel;
-    final myBloc = Provider.of<MyAppBloc>(context, listen: false);
+    final myBloc = Provider.of<CommentsAppBloc>(context, listen: false);
     myBloc.add(FetchUsersComments(model.id!));
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Comments'),
       ),
-      body: BlocBuilder<MyAppBloc, MyAppState>(
+      body: BlocBuilder<CommentsAppBloc, MyAppState>(
         builder: (context, state) {
           if (state is UserCommentsLoadingState) {
             return CommentsLoadingUI();
           } else if (state is UserCommentsLoadedState) {
-            return RefreshIndicator(onRefresh: ()async{
-              myBloc.add(FetchUsersComments(model.id!));
-            },child: CommentsLoadedUI(state.list, context));
+            return RefreshIndicator(
+                onRefresh: () async {
+                  myBloc.add(FetchUsersComments(model.id!));
+                },
+                child: CommentsLoadedUI(state.list, context));
           } else if (state is UserCommentsErrorState) {
-            return RefreshIndicator(onRefresh: ()async{
-              myBloc.add(FetchUsersComments(model.id!));
-            },child: CommentsErrorUI(state.msg));
+            return RefreshIndicator(
+                onRefresh: () async {
+                  myBloc.add(FetchUsersComments(model.id!));
+                },
+                child: CommentsErrorUI(state.msg));
           } else {
             return Text('Builder Error');
           }
