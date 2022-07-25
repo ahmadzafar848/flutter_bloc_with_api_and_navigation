@@ -20,7 +20,8 @@ Widget UserDetailLoadedUI(BuildContext context, List<UsersModel> list) {
         child: Column(
           children: [
             Text(list[index].name.toString()),
-            Text('${list[index].address}')
+            Text(list[index].address!.street.toString() +
+                list[index].address!.city.toString())
           ],
         ),
       );
